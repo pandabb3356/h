@@ -50,9 +50,6 @@ ENV PYTHONPATH /var/lib/hypothesis:$PYTHONPATH
 
 WORKDIR /var/lib/hypothesis
 
-# Copy nginx config
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-
 # Copy collectd config
 COPY conf/collectd.conf /etc/collectd/collectd.conf
 
@@ -66,6 +63,9 @@ COPY  h/static/ ./h/static/
 # Install node and python packages and cleanup build deps.
 RUN npm install --production && npm run build \
   && pip install --no-cache-dir -r requirements.txt  
+
+# Copy nginx config
+COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the rest of the application files.
 COPY . .
